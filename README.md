@@ -20,8 +20,8 @@ Chat with GPT-OSS-120B via your Cloudflare Worker directly inside VS Code. This 
 ### From Source
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/worker-ai-chat.git
-cd worker-ai-chat
+git clone https://github.com/needyamin/Worker-AI-Chat-VSCode-Plugin.git
+cd Worker-AI-Chat-VSCode-Plugin
 ```
 
 2. Install dependencies and vsce
@@ -85,7 +85,7 @@ To use your own worker:
 
 ## Contributing
 
-1. Fork the repository
+1. Fork the repository from [Worker-AI-Chat-VSCode-Plugin](https://github.com/needyamin/Worker-AI-Chat-VSCode-Plugin)
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)

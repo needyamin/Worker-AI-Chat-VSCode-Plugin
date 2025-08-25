@@ -5,7 +5,12 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = 'worker-ai-chat.chatView';
     private _view?: vscode.WebviewView;
 
-    constructor(private readonly _extensionUri: vscode.Uri) {}
+    constructor(private readonly _extensionUri: vscode.Uri) {
+    }
+
+    private _formatMessage(text: string): string {
+        return text;
+    }
 
     resolveWebviewView(
         webviewView: vscode.WebviewView,
@@ -68,6 +73,7 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
                         margin: 8px 0;
                         padding: 8px 12px;
                         border-radius: 6px;
+                        white-space: pre-wrap;
                     }
                     .user-message {
                         background-color: var(--vscode-button-background);
@@ -79,19 +85,25 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
                         color: var(--vscode-input-foreground);
                         align-self: flex-start;
                     }
-                    .input-box {
+                    .input-container {
                         display: flex;
+                        flex-direction: column;
+                        gap: 8px;
                         padding: 10px;
                         background: var(--vscode-editor-background);
                         border-top: 1px solid var(--vscode-input-border);
                     }
                     #messageInput {
-                        flex: 1;
+                        min-height: 80px;
+                        max-height: 200px;
                         padding: 8px;
-                        margin-right: 8px;
                         background: var(--vscode-input-background);
                         border: 1px solid var(--vscode-input-border);
                         color: var(--vscode-input-foreground);
+                        resize: vertical;
+                        font-family: var(--vscode-font-family);
+                        font-size: var(--vscode-font-size);
+                        line-height: 1.4;
                     }
                     button {
                         background: var(--vscode-button-background);
@@ -99,14 +111,22 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
                         border: none;
                         padding: 8px 12px;
                         cursor: pointer;
+                        align-self: flex-end;
+                        min-width: 80px;
+                    }
+                    button:hover {
+                        background: var(--vscode-button-hoverBackground);
                     }
                 </style>
             </head>
             <body>
                 <div class="chat-container">
                     <div class="messages" id="messageContainer"></div>
-                    <div class="input-box">
-                        <input type="text" id="messageInput" placeholder="Type your message...">
+                    <div class="input-container">
+                        <textarea 
+                            id="messageInput" 
+                            placeholder="Type your message here... (Press Shift+Enter for new line, Enter to send)"
+                        ></textarea>
                         <button onclick="sendMessage()">Send</button>
                     </div>
                 </div>
@@ -114,6 +134,21 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
                     const vscode = acquireVsCodeApi();
                     const messageContainer = document.getElementById('messageContainer');
                     const messageInput = document.getElementById('messageInput');
+
+                    // Handle Enter key for sending and Shift+Enter for new line
+                    messageInput.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            sendMessage();
+                        }
+                    });
+
+                    // Auto-resize textarea based on content
+                    messageInput.addEventListener('input', function() {
+                        this.style.height = 'auto';
+                        const height = Math.min(this.scrollHeight, 200);
+                        this.style.height = height + 'px';
+                    });
 
                     function sendMessage() {
                         const message = messageInput.value.trim();
@@ -130,17 +165,11 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
                     function addMessage(sender, text) {
                         const div = document.createElement('div');
                         div.className = \`message \${sender}-message\`;
-                        div.textContent = text;
+                        div.innerHTML = text; // Use innerHTML to render formatted markdown
                         messageContainer.appendChild(div);
                         messageContainer.scrollTop = messageContainer.scrollHeight;
                     }
-
-                    messageInput.addEventListener('keypress', (e) => {
-                        if (e.key === 'Enter') {
-                            sendMessage();
-                        }
-                    });
-
+                    
                     window.addEventListener('message', event => {
                         const message = event.data;
                         if (message.type === 'receiveMessage') {
