@@ -20,7 +20,7 @@ Chat with GPT-OSS-120B via your Cloudflare Worker directly inside VS Code. This 
 ### From Source
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/worker-ai-chat.git
+git clone https://github.com/needyamin/Worker-AI-Chat-VSCode-Plugin.git
 cd worker-ai-chat
 ```
 
