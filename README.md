@@ -24,9 +24,10 @@ git clone https://github.com/yourusername/worker-ai-chat.git
 cd worker-ai-chat
 ```
 
-2. Install dependencies
+2. Install dependencies and vsce
 ```bash
 npm install
+npm install -g @vscode/vsce
 ```
 
 3. Build the extension

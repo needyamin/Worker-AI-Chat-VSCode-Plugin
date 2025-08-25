@@ -10,29 +10,16 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:worker-ai-chat.askAI"
+    "onView:worker-ai-chat.chatView"
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
-        "command": "worker-ai-chat.askAI",
-        "title": "Ask Worker AI"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "worker-ai-chat.askAI",
-        "key": "ctrl+shift+a",
-        "mac": "cmd+shift+a"
-      }
-    ],
     "viewsContainers": {
       "activitybar": [
         {
           "id": "worker-ai-chat-sidebar",
           "title": "Worker AI Chat",
-          "icon": "comment-discussion"
+          "icon": "$(comment-discussion)"
         }
       ]
     },
