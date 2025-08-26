@@ -1,6 +1,6 @@
 {
-  "name": "worker-ai-chat",
-  "displayName": "Worker AI Chat",
+  "name": "YammyChatBot",
+  "displayName": "Yammy AI Chat",
   "description": "Chat with GPT-OSS-120B via Cloudflare Worker",
   "version": "0.0.1",
   "engines": {
@@ -17,21 +17,35 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "worker-ai-chat-sidebar",
+          "id": "worker-ai-chat",
           "title": "Worker AI Chat",
-          "icon": "$(comment-discussion)"
+          "icon": "media/chat.svg"
         }
       ]
     },
     "views": {
-      "worker-ai-chat-sidebar": [
+      "worker-ai-chat": [
         {
           "type": "webview",
           "id": "worker-ai-chat.chatView",
-          "name": "Worker AI Chat"
+          "name": "Chat"
         }
       ]
-    }
+    },
+    "commands": [
+      {
+        "command": "worker-ai-chat.start",
+        "title": "Ask Worker AI",
+        "category": "Worker AI Chat"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "worker-ai-chat.start",
+        "key": "ctrl+shift+a",
+        "mac": "cmd+shift+a"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
@@ -41,16 +55,17 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/marked": "^5.0.2",
+    "@types/marked": "^5.0.1",
     "@types/node": "^20.0.0",
     "@types/node-fetch": "^2.6.4",
     "@types/vscode": "^1.80.0",
     "@vscode/test-electron": "^2.3.4",
-    "typescript": "^5.2.0"
+    "typescript": "^5.2.0",
+    "@types/highlight.js": "^10.1.0"
   },
   "dependencies": {
-    "highlight.js": "^11.11.1",
-    "marked": "^4.3.0",
+    "highlight.js": "^11.8.0",
+    "marked": "^9.0.0",
     "node-fetch": "^2.6.12"
   }
 }
