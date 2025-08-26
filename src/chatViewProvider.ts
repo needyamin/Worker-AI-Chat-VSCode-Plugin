@@ -92,7 +92,8 @@ export class ChatViewProvider implements vscode.WebviewViewProvider {
         webviewView.webview.onDidReceiveMessage(async data => {
             if (data.type === 'sendMessage') {
                 try {
-                    const workerUrl = 'https://gpt-oss-120b.md-yamin-hossain.workers.dev';
+                   
+					const workerUrl = 'XXXXXXXXXXXXXX'; // Put Your Worker URL
                     const response = await fetch(`${workerUrl}?q=${encodeURIComponent(data.message)}`);
                     const answer = await response.text();
                     
